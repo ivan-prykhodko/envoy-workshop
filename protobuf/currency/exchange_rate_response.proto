@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package currency;
+
+import "protobuf/currency/exchange_rate.proto";
+
+option go_package = "github.com/ivan-prykhodko/envoy-workshop/protogen/go/currency";
+
+message ExchangeRateResponse {
+  ExchangeRate exchange_rate = 1;
+}

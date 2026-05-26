@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package currency;
+
+import "protobuf/currency/exchange_rate_request.proto";
+import "protobuf/currency/exchange_rate_response.proto";
+
+option go_package = "github.com/ivan-prykhodko/envoy-workshop/protogen/go/currency";
+
+service ExchangeRateService {
+  rpc GetExchangeRate (ExchangeRateRequest) returns (ExchangeRateResponse);
+}

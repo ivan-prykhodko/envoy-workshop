@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package currency;
+
+option go_package = "github.com/ivan-prykhodko/envoy-workshop/protogen/go/currency";
+
+message ExchangeRateRequest {
+  string from_currency = 1;
+  string to_currency = 2;
+}

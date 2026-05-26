@@ -1,0 +1,60 @@
+services:
+  product-app:
+    build:
+      target: app_dev
+    container_name: product-app
+    restart: unless-stopped
+    volumes:
+      - ./:/srv
+    ports:
+      - "8080:8080"
+    command: ["gow", "-c", "-v", "run", "cmd/product/httpserver/main.go"]
+    networks:
+      - product_network
+
+  product-envoy:
+    image: envoyproxy/envoy:v1.30-latest
+    container_name: product-envoy
+    volumes:
+      - ./docker/envoy/product-envoy.yaml:/etc/envoy/envoy.yaml
+      - ./docker/certs:/certs
+    ports:
+      - "8080"
+      - "15001"
+      - "9901:9901"
+    depends_on:
+      - product-app
+    networks:
+      - product_network
+      - mesh_network
+
+  currency-app:
+    build:
+      target: app_dev
+    restart: unless-stopped
+    command: ['go', 'run', 'cmd/currency/grpcserver/main.go']
+    volumes:
+      - ./:/srv
+    ports:
+      - '9091:9090'
+    networks:
+      - currency_network
+
+  currency-envoy:
+    image: envoyproxy/envoy:v1.30-latest
+    container_name: currency-envoy
+    volumes:
+      - ./docker/envoy/currency-envoy.yaml:/etc/envoy/envoy.yaml
+      - ./docker/certs:/certs
+    ports:
+      - "9092"
+    depends_on:
+      - currency-app
+    networks:
+      - currency_network
+      - mesh_network
+
+networks:
+  mesh_network:
+  product_network:
+  currency_network:
