@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package currency;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/ivan-prykhodko/envoy-workshop/protogen/go/currency";
+
+message ExchangeRate {
+  string from_currency = 1;
+  string to_currency = 2;
+  double rate = 3;
+  google.protobuf.Timestamp updated_at = 16;
+}
