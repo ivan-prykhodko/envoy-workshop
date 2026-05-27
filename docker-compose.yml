@@ -13,7 +13,7 @@ services:
       - product_network
 
   product-envoy:
-    image: envoyproxy/envoy:v1.30-latest
+    image: envoyproxy/envoy:v1.38-latest
     container_name: product-envoy
     volumes:
       - ./docker/envoy/product-envoy.yaml:/etc/envoy/envoy.yaml
@@ -41,7 +41,7 @@ services:
       - currency_network
 
   currency-envoy:
-    image: envoyproxy/envoy:v1.30-latest
+    image: envoyproxy/envoy:v1.38-latest
     container_name: currency-envoy
     volumes:
       - ./docker/envoy/currency-envoy.yaml:/etc/envoy/envoy.yaml
